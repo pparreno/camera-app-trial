@@ -21,8 +21,8 @@ class TimelineFragment : Fragment() {
     ): View? {
         timelineViewModel =
                 ViewModelProvider(this).get(TimelineViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
-        val textView: TextView = root.findViewById(R.id.text_dashboard)
+        val root = inflater.inflate(R.layout.fragment_timeline, container, false)
+        val textView: TextView = root.findViewById(R.id.text_timeline)
         timelineViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })

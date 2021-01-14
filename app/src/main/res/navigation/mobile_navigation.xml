@@ -9,17 +9,17 @@
         android:id="@+id/navigation_timeline"
         android:name="com.pparreno.cameratrial.ui.timeline.TimelineFragment"
         android:label="@string/title_timeline"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_camera" />
 
     <fragment
         android:id="@+id/navigation_camera"
         android:name="com.pparreno.cameratrial.ui.camera.CameraFragment"
         android:label="@string/title_camera"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_timeline" />
 
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.pparreno.cameratrial.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_profile" />
 </navigation>
