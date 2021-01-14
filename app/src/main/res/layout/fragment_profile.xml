@@ -12,7 +12,7 @@
         android:id="@+id/profile_image"
         android:layout_width="152dp"
         android:layout_height="152dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="45dp"
         android:src="@android:color/darker_gray"
         app:civ_border_color="#FF000000"
         app:civ_border_width="2dp"
@@ -23,40 +23,133 @@
 
     <TextView
         android:id="@+id/text_profile_name"
-        android:layout_width="match_parent"
-        android:layout_marginTop="15dp"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:text="Name"
         style="@style/profile_name_text_style"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Name"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_image" />
 
-    <LinearLayout android:layout_height="wrap_content"
+    <LinearLayout
+        android:id="@+id/profile_location_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_width="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/text_profile_name"
-        android:padding="2dp"
-        android:orientation="horizontal">
+        app:layout_constraintTop_toBottomOf="@id/text_profile_name">
 
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_marginEnd="2dp"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/ic_person_pin_circle"/>
+            android:layout_marginEnd="2dp"
+            android:src="@drawable/ic_person_pin_circle" />
 
         <TextView
             android:id="@+id/text_profile_location"
+            style="@style/profile_location_text_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Location"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="2dp"
-            style="@style/profile_location_text_style" />
+            android:text="Location" />
     </LinearLayout>
 
+
+    <LinearLayout
+        android:id="@+id/following_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="105dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_location_group">
+
+        <TextView
+            android:id="@+id/text_profile_following_value"
+            style="@style/profile_stub_text_style_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/zero_value"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/text_profile_following_label"
+            style="@style/profile_stub_text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/following" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/followers_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toStartOf="@id/following_group"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/following_group">
+
+        <TextView
+            android:id="@+id/text_profile_followers_value"
+            style="@style/profile_stub_text_style_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/zero_value"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/text_profile_followers_label"
+            style="@style/profile_stub_text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/followers" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/posts_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/following_group"
+        app:layout_constraintTop_toTopOf="@id/following_group">
+
+        <TextView
+            android:id="@+id/text_profile_posts_value"
+            style="@style/profile_stub_text_style_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/zero_value"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/text_profile_posts_label"
+            style="@style/profile_stub_text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/followers" />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/following_group" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
