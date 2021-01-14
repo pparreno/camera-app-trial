@@ -1,4 +1,4 @@
-package com.pparreno.cameratrial.ui.dashboard
+package com.pparreno.cameratrial.ui.camera
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,20 +10,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.pparreno.cameratrial.R
 
-class DashboardFragment : Fragment() {
+class CameraFragment : Fragment() {
 
-    private lateinit var dashboardViewModel: DashboardViewModel
+    private lateinit var cameraViewModel: CameraViewModel
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        dashboardViewModel =
-                ViewModelProvider(this).get(DashboardViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
-        val textView: TextView = root.findViewById(R.id.text_dashboard)
-        dashboardViewModel.text.observe(viewLifecycleOwner, Observer {
+        cameraViewModel =
+                ViewModelProvider(this).get(CameraViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_home, container, false)
+        val textView: TextView = root.findViewById(R.id.text_home)
+        cameraViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root
