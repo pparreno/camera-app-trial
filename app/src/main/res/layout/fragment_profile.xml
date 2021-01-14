@@ -7,7 +7,6 @@
     android:background="@color/bg_gray"
     tools:context=".ui.profile.ProfileFragment">
 
-
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
         android:layout_width="152dp"
@@ -19,7 +18,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <TextView
         android:id="@+id/text_profile_name"
@@ -60,7 +58,6 @@
             android:text="Location" />
     </LinearLayout>
 
-
     <LinearLayout
         android:id="@+id/following_group"
         android:layout_width="wrap_content"
@@ -88,7 +85,6 @@
             android:text="@string/following" />
 
     </LinearLayout>
-
 
     <LinearLayout
         android:id="@+id/followers_group"
