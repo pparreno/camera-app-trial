@@ -15,7 +15,7 @@
         android:id="@+id/navigation_camera"
         android:name="com.pparreno.cameratrial.ui.camera.CameraFragment"
         android:label="@string/title_camera"
-        tools:layout="@layout/fragment_timeline" />
+        tools:layout="@layout/fragment_camera" />
 
     <fragment
         android:id="@+id/navigation_profile"
