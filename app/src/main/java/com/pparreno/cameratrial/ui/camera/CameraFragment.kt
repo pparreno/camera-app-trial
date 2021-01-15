@@ -2,7 +2,8 @@ package com.pparreno.cameratrial.ui.camera
 
 import android.Manifest
 import android.app.Activity
-import android.content.Context
+import android.app.Activity.RESULT_OK
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
@@ -10,7 +11,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
@@ -21,9 +21,9 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.pparreno.cameratrial.R
+import com.yalantis.ucrop.UCrop
 import kotlinx.android.synthetic.main.fragment_camera.*
 import java.io.File
 import java.text.SimpleDateFormat
@@ -99,6 +99,15 @@ class CameraFragment : Fragment() {
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK && requestCode == UCrop.REQUEST_CROP) {
+            val resultUri = data?.let { UCrop.getOutput(it) }
+        } else if (resultCode == UCrop.RESULT_ERROR) {
+            val cropError = data?.let { UCrop.getError(it) }
+        }
+    }
+
     private fun takePhoto() {
         Log.d(TAG, "takePhoto method called")
         // Get a stable reference of the modifiable image capture use case
@@ -124,9 +133,14 @@ class CameraFragment : Fragment() {
 
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
                     val savedUri = Uri.fromFile(photoFile)
+                    val croppedPath = photoFile.absolutePath
+                    var destinationUri = Uri.fromFile(File(croppedPath))
                     val msg = "Photo capture succeeded: $savedUri"
                     Toast.makeText(activity?.baseContext, msg, Toast.LENGTH_SHORT).show()
                     Log.d(TAG, msg)
+
+                    UCrop.of(savedUri, destinationUri)
+                        .start(this@CameraFragment.requireActivity())
                 }
             })
     }
