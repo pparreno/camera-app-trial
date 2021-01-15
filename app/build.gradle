@@ -74,5 +74,8 @@ dependencies {
     //uCrop
     implementation 'com.github.yalantis:ucrop:2.2.6'
 
+    //PhotoEditor
+    implementation 'ja.burhanrashid52:photoeditor:1.1.0'
+
 
 }
