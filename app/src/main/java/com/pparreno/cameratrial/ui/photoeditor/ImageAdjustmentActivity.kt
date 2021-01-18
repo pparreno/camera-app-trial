@@ -41,13 +41,16 @@ class ImageAdjustmentActivity : AppCompatActivity() {
             }
         })
 
-        binding!!.seekbarContrast.setOnSeekBarChangeListener(object :
+        val labelContrast = binding!!.labelContrast
+        val seekBarContrast = binding!!.seekbarContrast
+        labelContrast.text = String.format("%s (%.2f)", getString(R.string.contrast), seekBarContrast.progress/50.0f)
+        seekBarContrast.setOnSeekBarChangeListener(object :
             SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 //This sets the contrast. 1 = unchanged, 0 = gray, 2 = high contrast
                 val contrastVal = progress / 50.0f
                 binding!!.imageFilterView.contrast = contrastVal
-                binding!!.labelContrast.text =  String.format("%s (%.2f)", getString(R.string.contrast), contrastVal)
+                labelContrast.text =  String.format("%s (%.2f)", getString(R.string.contrast), contrastVal)
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -59,13 +62,16 @@ class ImageAdjustmentActivity : AppCompatActivity() {
             }
         })
 
-        binding!!.seekbarBrightness.setOnSeekBarChangeListener(object :
+        val labelBrightness = binding!!.labelBrightness
+        val seekBarBrightness = binding!!.seekbarBrightness
+        labelBrightness.text = String.format("%s (%.2f)", getString(R.string.brightness), seekBarBrightness.progress/50.0f)
+        seekBarBrightness.setOnSeekBarChangeListener(object :
             SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 //sets the brightness of the image; 0 = black, 1 = original, 2 = twice as bright
                 val brightnessVal = progress / 50.0f
                 binding!!.imageFilterView.brightness = brightnessVal
-                binding!!.labelBrightness.text =  String.format("%s (%.2f)", getString(R.string.brightness), brightnessVal)
+                labelBrightness.text =  String.format("%s (%.2f)", getString(R.string.brightness), brightnessVal)
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -77,13 +83,16 @@ class ImageAdjustmentActivity : AppCompatActivity() {
             }
         })
 
-        binding!!.seekbarWarmth.setOnSeekBarChangeListener(object :
+        val labelWarmth = binding!!.labelWarmth
+        val seekBarWarmth = binding!!.seekbarWarmth
+        labelWarmth.text = String.format("%s (%.2f)", getString(R.string.warmth), (seekBarWarmth.progress/90.0f) + 0.5f)
+        seekBarWarmth.setOnSeekBarChangeListener(object :
             SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 // 1 is neutral, 2 is warm, .5 is cold
                 val warmthVal = (progress/90.0f) + 0.5f
                 binding!!.imageFilterView.warmth = warmthVal
-                binding!!.labelWarmth.text =  String.format("%s (%.2f)", getString(R.string.warmth), warmthVal)
+                labelWarmth.text =  String.format("%s (%.2f)", getString(R.string.warmth), warmthVal)
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
