@@ -24,6 +24,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.pparreno.cameratrial.ui.photoeditor.EditImageKActivity
 import com.pparreno.cameratrial.R
+import com.pparreno.cameratrial.ui.photoeditor.ImageAdjustmentActivity
 import com.pparreno.cameratrial.utils.files.FileHelper
 import com.yalantis.ucrop.UCrop
 import kotlinx.android.synthetic.main.fragment_camera.*
@@ -112,9 +113,10 @@ class CameraFragment : Fragment() {
             Toast.makeText(context,
                 "successful crop: " + resultUri.toString(),
                 Toast.LENGTH_SHORT).show()
-            val editImageIntent = Intent(requireContext(), EditImageKActivity::class.java)
-            editImageIntent.putExtra(KEY_EXTRA_RESULT_URI, resultUri)
-            requireActivity().startActivity(editImageIntent)
+//            val editImageIntent = Intent(requireContext(), EditImageKActivity::class.java)
+            val adjustImageIntent = Intent(requireContext(), ImageAdjustmentActivity::class.java)
+            adjustImageIntent.putExtra(KEY_EXTRA_RESULT_URI, resultUri)
+            requireActivity().startActivity(adjustImageIntent)
         } else if (resultCode == UCrop.RESULT_ERROR) {
             val cropError = data?.let { UCrop.getError(it) }
         }

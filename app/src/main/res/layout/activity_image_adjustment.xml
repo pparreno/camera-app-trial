@@ -1,92 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:paddingBottom="10dp">
 
     <androidx.constraintlayout.utils.widget.ImageFilterView
+        android:id="@+id/imageFilterView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:id="@+id/imageFilterView"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         app:brightness="0.4"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintDimensionRatio="16:9"
-        tools:srcCompat="@tools:sample/avatars"
-        />
-
-    <SeekBar
-        style="@android:style/Widget.DeviceDefault.Light.SeekBar"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:max="100"
-        android:progress="0"
-        android:id="@+id/seekBar"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="32dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textViewWarmth"/>
-
-    <SeekBar
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:id="@+id/seekBarContrast"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/seekBar"
-        app:layout_constraintStart_toEndOf="@+id/textViewContrast"/>
-
-    <TextView
-        android:text="@string/contrast"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textViewContrast"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="16dp"
-        app:layout_constraintTop_toTopOf="@+id/seekBarContrast"
-        app:layout_constraintBottom_toBottomOf="@+id/seekBarContrast"/>
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:text="@string/saturation"
+        android:id="@+id/label_warmth"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textViewSaturation"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="16dp"
-        app:layout_constraintTop_toTopOf="@+id/seekBarWarmth"
-        app:layout_constraintBottom_toBottomOf="@+id/seekBarWarmth"/>
-
-    <SeekBar
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:id="@+id/seekBarWarmth"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintStart_toEndOf="@+id/textViewSaturation"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/seekBarContrast"/>
-
-    <TextView
+        android:layout_height="45dp"
+        android:layout_marginStart="10dp"
+        android:gravity="center"
         android:text="@string/warmth"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/label_brightness"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_marginStart="10dp"
+        android:gravity="center"
+        android:text="@string/brightness"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@id/label_warmth"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/label_contrast"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_marginStart="10dp"
+        android:gravity="center"
+        android:text="@string/contrast"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@id/label_brightness"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/label_saturation"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_marginStart="10dp"
+        android:gravity="center"
+        android:text="@string/saturation"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@id/label_contrast"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/seekbar_labels_barrier"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textViewWarmth"
-        app:layout_constraintTop_toTopOf="@+id/seekBar"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/seekBar"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="16dp"/>
+        app:barrierDirection="right"
+        app:constraint_referenced_ids="label_saturation,label_warmth,label_brightness,label_contrast"
+        tools:layout_editor_absoluteX="411dp" />
+
+    <SeekBar
+        android:id="@+id/seekbar_warmth"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:max="3"
+        android:min="0"
+        android:progress="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/seekbar_labels_barrier" />
+
+    <SeekBar
+        android:id="@+id/seekbar_brightness"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:max="2"
+        android:min="0"
+        android:progress="1"
+        app:layout_constraintBottom_toTopOf="@id/seekbar_warmth"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/seekbar_labels_barrier" />
+
+    <SeekBar
+        android:id="@+id/seekbar_contrast"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:max="2"
+        android:min="0"
+        android:progress="1"
+        app:layout_constraintBottom_toTopOf="@id/seekbar_brightness"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/seekbar_labels_barrier" />
+
+    <SeekBar
+        android:id="@+id/seekbar_saturation"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:max="2"
+        android:min="0"
+        android:progress="1"
+        app:layout_constraintBottom_toTopOf="@id/seekbar_contrast"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/seekbar_labels_barrier" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
