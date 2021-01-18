@@ -34,6 +34,7 @@ import com.burhanrashid52.photoeditor.tools.EditingToolsAdapter.OnItemSelected
 import com.burhanrashid52.photoeditor.tools.ToolType
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.pparreno.cameratrial.R
+import com.pparreno.cameratrial.ui.camera.CameraFragment
 import com.pparreno.cameratrial.utils.files.FileHelper
 import ja.burhanrashid52.photoeditor.*
 import ja.burhanrashid52.photoeditor.PhotoEditor.OnSaveListener
@@ -92,6 +93,9 @@ class EditImageKActivity() : BaseActivity(), OnPhotoEditorListener, View.OnClick
 
         //Set Image Dynamically
         // mPhotoEditorView.getSource().setImageResource(R.drawable.color_palette);
+
+        val dataURI = intent.getParcelableExtra<Uri>(CameraFragment.KEY_EXTRA_RESULT_URI)
+        mPhotoEditorView!!.source.setImageURI(dataURI)
     }
 
     private fun handleIntentImage(source: ImageView) {
@@ -225,11 +229,13 @@ class EditImageKActivity() : BaseActivity(), OnPhotoEditorListener, View.OnClick
                         showSnackbar("Image Saved Successfully")
                         mSaveImageUri = Uri.fromFile(File(imagePath))
                         mPhotoEditorView!!.source.setImageURI(mSaveImageUri)
+                        finish()
                     }
 
                     override fun onFailure(exception: Exception) {
                         hideLoading()
                         showSnackbar("Failed to save Image")
+                        finish()
                     }
                 })
             } catch (e: IOException) {
