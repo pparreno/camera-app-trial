@@ -22,19 +22,18 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.burhanrashid52.photoeditor.EditImageActivity
-import com.burhanrashid52.photoeditor.EditImageKActivity
+import com.pparreno.cameratrial.ui.photoeditor.EditImageKActivity
 import com.pparreno.cameratrial.R
 import com.pparreno.cameratrial.utils.files.FileHelper
 import com.yalantis.ucrop.UCrop
 import kotlinx.android.synthetic.main.fragment_camera.*
 import java.io.File
-import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 class CameraFragment : Fragment() {
+
 
     private lateinit var cameraViewModel: CameraViewModel
 
@@ -114,6 +113,7 @@ class CameraFragment : Fragment() {
                 "successful crop: " + resultUri.toString(),
                 Toast.LENGTH_SHORT).show()
             val editImageIntent = Intent(requireContext(), EditImageKActivity::class.java)
+            editImageIntent.putExtra(KEY_EXTRA_RESULT_URI, resultUri)
             requireActivity().startActivity(editImageIntent)
         } else if (resultCode == UCrop.RESULT_ERROR) {
             val cropError = data?.let { UCrop.getError(it) }
@@ -211,6 +211,7 @@ class CameraFragment : Fragment() {
     }
 
     companion object {
+        const val KEY_EXTRA_RESULT_URI ="KEY_EXTRA_RESULT_URI"
         private const val TAG = "CameraXBasic"
         private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
         private const val REQUEST_CODE_PERMISSIONS = 10

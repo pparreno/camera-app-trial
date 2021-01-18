@@ -1,4 +1,4 @@
-package com.burhanrashid52.photoeditor
+package com.pparreno.cameratrial.ui.photoeditor
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -7,7 +7,6 @@ import android.graphics.Bitmap
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
@@ -24,6 +23,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.ChangeBounds
 import androidx.transition.TransitionManager
+import com.burhanrashid52.photoeditor.*
 import com.burhanrashid52.photoeditor.EmojiBSFragment.EmojiListener
 import com.burhanrashid52.photoeditor.StickerBSFragment.StickerListener
 import com.burhanrashid52.photoeditor.base.BaseActivity
@@ -108,31 +108,24 @@ class EditImageKActivity() : BaseActivity(), OnPhotoEditorListener, View.OnClick
     }
 
     private fun initViews() {
-        val imgUndo: ImageView
-        val imgRedo: ImageView
-        val imgCamera: ImageView
-        val imgGallery: ImageView
-        val imgSave: ImageView
-        val imgClose: ImageView
-        val imgShare: ImageView
         mPhotoEditorView = findViewById(R.id.photoEditorView)
         mTxtCurrentTool = findViewById(R.id.txtCurrentTool)
         mRvTools = findViewById(R.id.rvConstraintTools)
         mRvFilters = findViewById(R.id.rvFilterView)
         mRootView = findViewById(R.id.rootView)
-        imgUndo = findViewById(R.id.imgUndo)
+        val imgUndo: ImageView = findViewById(R.id.imgUndo)
         imgUndo.setOnClickListener(this)
-        imgRedo = findViewById(R.id.imgRedo)
+        val imgRedo: ImageView = findViewById(R.id.imgRedo)
         imgRedo.setOnClickListener(this)
-        imgCamera = findViewById(R.id.imgCamera)
+        val imgCamera: ImageView = findViewById(R.id.imgCamera)
         imgCamera.setOnClickListener(this)
-        imgGallery = findViewById(R.id.imgGallery)
+        val imgGallery: ImageView = findViewById(R.id.imgGallery)
         imgGallery.setOnClickListener(this)
-        imgSave = findViewById(R.id.imgSave)
+        val imgSave: ImageView = findViewById(R.id.imgSave)
         imgSave.setOnClickListener(this)
-        imgClose = findViewById(R.id.imgClose)
+        val imgClose: ImageView = findViewById(R.id.imgClose)
         imgClose.setOnClickListener(this)
-        imgShare = findViewById(R.id.imgShare)
+        val imgShare: ImageView = findViewById(R.id.imgShare)
         imgShare.setOnClickListener(this)
     }
 
@@ -141,7 +134,7 @@ class EditImageKActivity() : BaseActivity(), OnPhotoEditorListener, View.OnClick
         textEditorDialogFragment.setOnTextEditorListener { inputText, colorCode ->
             val styleBuilder = TextStyleBuilder()
             styleBuilder.withTextColor(colorCode)
-            mPhotoEditor!!.editText(rootView, inputText, styleBuilder)
+            mPhotoEditor.editText(rootView, inputText, styleBuilder)
             mTxtCurrentTool!!.setText(R.string.label_text)
         }
     }
@@ -176,8 +169,8 @@ class EditImageKActivity() : BaseActivity(), OnPhotoEditorListener, View.OnClick
 
     override fun onClick(view: View) {
         when (view.id) {
-            R.id.imgUndo -> mPhotoEditor!!.undo()
-            R.id.imgRedo -> mPhotoEditor!!.redo()
+            R.id.imgUndo -> mPhotoEditor.undo()
+            R.id.imgRedo -> mPhotoEditor.redo()
             R.id.imgSave -> saveImage()
             R.id.imgClose -> onBackPressed()
             R.id.imgShare -> shareImage()
@@ -226,7 +219,7 @@ class EditImageKActivity() : BaseActivity(), OnPhotoEditorListener, View.OnClick
                     .setClearViewsEnabled(true)
                     .setTransparencyEnabled(true)
                     .build()
-                mPhotoEditor!!.saveAsFile(file.absolutePath, saveSettings, object : OnSaveListener {
+                mPhotoEditor.saveAsFile(file.absolutePath, saveSettings, object : OnSaveListener {
                     override fun onSuccess(imagePath: String) {
                         hideLoading()
                         showSnackbar("Image Saved Successfully")
@@ -255,12 +248,12 @@ class EditImageKActivity() : BaseActivity(), OnPhotoEditorListener, View.OnClick
         if (resultCode == RESULT_OK) {
             when (requestCode) {
                 CAMERA_REQUEST -> {
-                    mPhotoEditor!!.clearAllViews()
+                    mPhotoEditor.clearAllViews()
                     val photo = data!!.extras!!["data"] as Bitmap?
                     mPhotoEditorView!!.source.setImageBitmap(photo)
                 }
                 PICK_REQUEST -> try {
-                    mPhotoEditor!!.clearAllViews()
+                    mPhotoEditor.clearAllViews()
                     val uri = data!!.data
                     val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
                     mPhotoEditorView!!.source.setImageBitmap(bitmap)
@@ -272,27 +265,27 @@ class EditImageKActivity() : BaseActivity(), OnPhotoEditorListener, View.OnClick
     }
 
     override fun onColorChanged(colorCode: Int) {
-        mPhotoEditor!!.brushColor = colorCode
+        mPhotoEditor.brushColor = colorCode
         mTxtCurrentTool!!.setText(R.string.label_brush)
     }
 
     override fun onOpacityChanged(opacity: Int) {
-        mPhotoEditor!!.setOpacity(opacity)
+        mPhotoEditor.setOpacity(opacity)
         mTxtCurrentTool!!.setText(R.string.label_brush)
     }
 
     override fun onBrushSizeChanged(brushSize: Int) {
-        mPhotoEditor!!.brushSize = brushSize.toFloat()
+        mPhotoEditor.brushSize = brushSize.toFloat()
         mTxtCurrentTool!!.setText(R.string.label_brush)
     }
 
     override fun onEmojiClick(emojiUnicode: String) {
-        mPhotoEditor!!.addEmoji(emojiUnicode)
+        mPhotoEditor.addEmoji(emojiUnicode)
         mTxtCurrentTool!!.setText(R.string.label_emoji)
     }
 
     override fun onStickerClick(bitmap: Bitmap) {
-        mPhotoEditor!!.addImage(bitmap)
+        mPhotoEditor.addImage(bitmap)
         mTxtCurrentTool!!.setText(R.string.label_sticker)
     }
 
@@ -318,13 +311,13 @@ class EditImageKActivity() : BaseActivity(), OnPhotoEditorListener, View.OnClick
     }
 
     override fun onFilterSelected(photoFilter: PhotoFilter) {
-        mPhotoEditor!!.setFilterEffect(photoFilter)
+        mPhotoEditor.setFilterEffect(photoFilter)
     }
 
     override fun onToolSelected(toolType: ToolType) {
         when (toolType) {
             ToolType.BRUSH -> {
-                mPhotoEditor!!.setBrushDrawingMode(true)
+                mPhotoEditor.setBrushDrawingMode(true)
                 mTxtCurrentTool!!.setText(R.string.label_brush)
                 showBottomSheetDialogFragment(mPropertiesBSFragment)
             }
@@ -333,12 +326,12 @@ class EditImageKActivity() : BaseActivity(), OnPhotoEditorListener, View.OnClick
                 textEditorDialogFragment.setOnTextEditorListener { inputText, colorCode ->
                     val styleBuilder = TextStyleBuilder()
                     styleBuilder.withTextColor(colorCode)
-                    mPhotoEditor!!.addText(inputText, styleBuilder)
+                    mPhotoEditor.addText(inputText, styleBuilder)
                     mTxtCurrentTool!!.setText(R.string.label_text)
                 }
             }
             ToolType.ERASER -> {
-                mPhotoEditor!!.brushEraser()
+                mPhotoEditor.brushEraser()
                 mTxtCurrentTool!!.setText(R.string.label_eraser_mode)
             }
             ToolType.FILTER -> {
@@ -397,8 +390,8 @@ class EditImageKActivity() : BaseActivity(), OnPhotoEditorListener, View.OnClick
 
     companion object {
         private val TAG = EditImageActivity::class.java.simpleName
-        val FILE_PROVIDER_AUTHORITY = "com.burhanrashid52.photoeditor.fileprovider"
-        private val CAMERA_REQUEST = 52
-        private val PICK_REQUEST = 53
+        const val FILE_PROVIDER_AUTHORITY = "com.burhanrashid52.photoeditor.fileprovider"
+        private const val CAMERA_REQUEST = 52
+        private const val PICK_REQUEST = 53
     }
 }

@@ -49,7 +49,7 @@
         </activity>
 
         <activity
-            android:name="com.burhanrashid52.photoeditor.EditImageKActivity"
+            android:name=".ui.photoeditor.EditImageKActivity"
             android:screenOrientation="portrait">
 
             <intent-filter
