@@ -21,5 +21,14 @@
     <string name="msg_save_image">Are you want to exit without saving image ?</string>
     <string name="app_intent_name">PhotoEditor</string>
     <string name="msg_save_image_to_share">Please save image to share</string>
-    <string name="msg_share_image">Share Image</string>>
+    <string name="msg_share_image">Share Image</string>
+    <string name="title_activity_image_adjustment">ImageAdjustmentActivity</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">Hello Square World!</string>
+    <string name="warmth">Warmth</string>
+    <string name="saturation">Saturation</string>
+    <string name="contrast">Contrast</string>>
 </resources>
