@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.animation.AnticipateOvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -263,11 +264,14 @@ public class EditImageActivity extends BaseActivity implements OnPhotoEditorList
 
     @SuppressLint("MissingPermission")
     private void saveImage() {
+        Log.d(TAG, "saveImage");
         if (requestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            Log.d(TAG, "saveImage ~ has permission");
             showLoading("Saving...");
             File file = new File(Environment.getExternalStorageDirectory()
                     + File.separator + ""
                     + System.currentTimeMillis() + ".png");
+
             try {
                 file.createNewFile();
 
@@ -296,6 +300,9 @@ public class EditImageActivity extends BaseActivity implements OnPhotoEditorList
                 hideLoading();
                 showSnackbar(e.getMessage());
             }
+        } else {
+            Toast.makeText(this, "Need storage permission", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "saveImage ~ requires permission");
         }
     }
 

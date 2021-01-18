@@ -22,7 +22,10 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.burhanrashid52.photoeditor.EditImageActivity
+import com.burhanrashid52.photoeditor.EditImageKActivity
 import com.pparreno.cameratrial.R
+import com.pparreno.cameratrial.utils.files.FileHelper
 import com.yalantis.ucrop.UCrop
 import kotlinx.android.synthetic.main.fragment_camera.*
 import java.io.File
@@ -71,7 +74,8 @@ class CameraFragment : Fragment() {
         // Set up the listener for take photo button
         camera_capture_button.setOnClickListener { takePhoto() }
 
-        outputDirectory = getOutputDirectory()
+        //outputDirectory = getOutputDirectory()
+        outputDirectory = FileHelper.getOutputDirectory(requireActivity())
 
         cameraExecutor = Executors.newSingleThreadExecutor()
     }
@@ -99,13 +103,22 @@ class CameraFragment : Fragment() {
         }
     }
 
+
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        Log.d(TAG, "onActivityResult()")
         if (resultCode == RESULT_OK && requestCode == UCrop.REQUEST_CROP) {
             val resultUri = data?.let { UCrop.getOutput(it) }
+            Toast.makeText(context,
+                "successful crop: " + resultUri.toString(),
+                Toast.LENGTH_SHORT).show()
+            val editImageIntent = Intent(requireContext(), EditImageKActivity::class.java)
+            requireActivity().startActivity(editImageIntent)
         } else if (resultCode == UCrop.RESULT_ERROR) {
             val cropError = data?.let { UCrop.getError(it) }
         }
+
     }
 
     private fun takePhoto() {
@@ -115,10 +128,11 @@ class CameraFragment : Fragment() {
 
         Log.d(TAG, "takePhoto method called")
         // Create time-stamped output file to hold the image
-        val photoFile = File(
+       /* val photoFile = File(
             outputDirectory,
             SimpleDateFormat(FILENAME_FORMAT, Locale.US
-            ).format(System.currentTimeMillis()) + ".jpg")
+            ).format(System.currentTimeMillis()) + ".jpg")*/
+        val photoFile = FileHelper.getFileForStorage(outputDirectory)
 
         // Create output options object which contains file + metadata
         val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
@@ -140,7 +154,8 @@ class CameraFragment : Fragment() {
                     Log.d(TAG, msg)
 
                     UCrop.of(savedUri, destinationUri)
-                        .start(this@CameraFragment.requireActivity())
+                        .start(this@CameraFragment.requireContext(), this@CameraFragment,
+                            UCrop.REQUEST_CROP)
                 }
             })
     }
@@ -199,6 +214,6 @@ class CameraFragment : Fragment() {
         private const val TAG = "CameraXBasic"
         private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
         private const val REQUEST_CODE_PERMISSIONS = 10
-        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
+        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
     }
 }
