@@ -59,6 +59,8 @@ class EditImageKActivity() : BaseActivity(), OnPhotoEditorListener, View.OnClick
     private val mConstraintSet = ConstraintSet()
     private var mIsFilterVisible = false
 
+    lateinit var imageUri : Uri
+
     @VisibleForTesting
     var mSaveImageUri: Uri? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -95,6 +97,7 @@ class EditImageKActivity() : BaseActivity(), OnPhotoEditorListener, View.OnClick
         // mPhotoEditorView.getSource().setImageResource(R.drawable.color_palette);
 
         val dataURI = intent.getParcelableExtra<Uri>(CameraFragment.KEY_EXTRA_RESULT_URI)
+        imageUri = dataURI as Uri
         mPhotoEditorView!!.source.setImageURI(dataURI)
     }
 
@@ -216,7 +219,7 @@ class EditImageKActivity() : BaseActivity(), OnPhotoEditorListener, View.OnClick
         if (requestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             Log.d(TAG, "saveImage ~ has permission")
             showLoading("Saving...")
-            val outputDir = FileHelper.getOutputDirectory(this)
+            val outputDir = File(imageUri.path)
             val file = FileHelper.getFileForStorage(outputDir)
             try {
                 val saveSettings = SaveSettings.Builder()

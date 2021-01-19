@@ -40,16 +40,11 @@ class FileHelper {
         }
 
         @JvmStatic
-        fun saveImage(bitmap: Bitmap, activity: Activity): Uri? {
-
+        fun saveImage(bitmap: Bitmap, activity: Activity, uri: Uri){
             try {
-                val outputFile = getFileForStorage(getOutputDirectory(activity))
-                val uri: Uri = outputFile.toUri()
-                val outstream: OutputStream
-                outstream = activity.contentResolver.openOutputStream(uri)!!
+                val outstream: OutputStream = activity.contentResolver.openOutputStream(uri)!!
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 70, outstream)
                 outstream.close()
-                return uri
             } catch (e: IOException) {
                 e.printStackTrace()
                 Toast.makeText(
@@ -58,7 +53,6 @@ class FileHelper {
                     Toast.LENGTH_LONG
                 ).show()
                 e.message?.let { Log.e(TAG, it) }
-                return null
             }
         }
     }

@@ -32,6 +32,8 @@ class ImageAdjustmentActivity : AppCompatActivity() {
     lateinit var seekBarBrightness : SeekBar
     lateinit var seekBarWarmth : SeekBar
 
+    lateinit var imageUri : Uri
+
     private val TAG = "ImageAdjustmentActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -158,6 +160,7 @@ class ImageAdjustmentActivity : AppCompatActivity() {
 
         val dataURI = intent.getParcelableExtra<Uri>(CameraFragment.KEY_EXTRA_RESULT_URI)
         binding!!.imageFilterView.setImageURI(dataURI)
+        imageUri = dataURI as Uri
 
         title = "";
     }
@@ -200,9 +203,9 @@ class ImageAdjustmentActivity : AppCompatActivity() {
                         rect.width().toInt(),
                         rect.height().toInt()
                     )
-                    val outputFile = FileHelper.saveImage(bm, this@ImageAdjustmentActivity)
+                    FileHelper.saveImage(bm, this@ImageAdjustmentActivity, imageUri)
                     val editImageIntent = Intent(this@ImageAdjustmentActivity, EditImageKActivity::class.java)
-                    editImageIntent.putExtra(CameraFragment.KEY_EXTRA_RESULT_URI, outputFile)
+                    editImageIntent.putExtra(CameraFragment.KEY_EXTRA_RESULT_URI, imageUri)
                     this@ImageAdjustmentActivity.startActivity(editImageIntent)
                 }
             })
