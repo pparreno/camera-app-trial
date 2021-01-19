@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.pparreno.cameratrial.databinding.FragmentProfileBinding
 
 
@@ -34,5 +35,21 @@ class ProfileFragment : Fragment() {
         recyclerView = profileBinding.recyclerView
 
         return profileBinding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        // initialize staggered grid layout manager
+        StaggeredGridLayoutManager(
+            2, // span count
+            StaggeredGridLayoutManager.VERTICAL // orientation
+        ).apply {
+            // specify the layout manager for recycler view
+            this.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
+            recyclerView.layoutManager = this
+        }
+
+        // finally, data bind the recycler view with adapter
+        recyclerView.adapter = ProfileRecyclerViewAdapter()
     }
 }

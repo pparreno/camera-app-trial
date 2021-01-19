@@ -220,13 +220,12 @@ class EditImageKActivity() : BaseActivity(), OnPhotoEditorListener, View.OnClick
             Log.d(TAG, "saveImage ~ has permission")
             showLoading("Saving...")
             val outputDir = File(imageUri.path)
-            val file = FileHelper.getFileForStorage(outputDir)
             try {
                 val saveSettings = SaveSettings.Builder()
                     .setClearViewsEnabled(true)
                     .setTransparencyEnabled(true)
                     .build()
-                mPhotoEditor.saveAsFile(file.absolutePath, saveSettings, object : OnSaveListener {
+                mPhotoEditor.saveAsFile(outputDir.absolutePath, saveSettings, object : OnSaveListener {
                     override fun onSuccess(imagePath: String) {
                         hideLoading()
                         showSnackbar("Image Saved Successfully")
@@ -238,6 +237,7 @@ class EditImageKActivity() : BaseActivity(), OnPhotoEditorListener, View.OnClick
                     override fun onFailure(exception: Exception) {
                         hideLoading()
                         showSnackbar("Failed to save Image")
+                        exception.message?.let { Log.e(TAG, it) }
                         finish()
                     }
                 })
