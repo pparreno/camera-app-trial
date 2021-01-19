@@ -7,28 +7,32 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.pparreno.cameratrial.R
+import androidx.recyclerview.widget.RecyclerView
+import com.pparreno.cameratrial.databinding.FragmentProfileBinding
 
 
 class ProfileFragment : Fragment() {
 
     private lateinit var profileViewModel: ProfileViewModel
 
+    private lateinit var profileBinding: FragmentProfileBinding
+
+    private lateinit var recyclerView: RecyclerView
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
 
         profileViewModel =
                 ViewModelProvider(this).get(ProfileViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_profile, container, false)
-        /*val textView: TextView = root.findViewById(R.id.text_profile)
-        profileViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })*/
-        return root
+        profileBinding = FragmentProfileBinding.inflate(inflater, container, false)
+
+        recyclerView = profileBinding.recyclerView
+
+        return profileBinding.root
     }
 }
