@@ -1,17 +1,25 @@
 package com.pparreno.cameratrial.ui.photoeditor
 
 import android.content.DialogInterface
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.RectF
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.SeekBar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.drawToBitmap
 import com.pparreno.cameratrial.R
 import com.pparreno.cameratrial.databinding.ActivityImageAdjustmentBinding
 import com.pparreno.cameratrial.ui.camera.CameraFragment
+import com.pparreno.cameratrial.utils.files.FileHelper
+import kotlinx.android.synthetic.main.activity_image_adjustment.*
 import kotlinx.android.synthetic.main.activity_image_adjustment.view.*
 
 
@@ -23,6 +31,8 @@ class ImageAdjustmentActivity : AppCompatActivity() {
     lateinit var seekBarContrast : SeekBar
     lateinit var seekBarBrightness : SeekBar
     lateinit var seekBarWarmth : SeekBar
+
+    private val TAG = "ImageAdjustmentActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -178,7 +188,23 @@ class ImageAdjustmentActivity : AppCompatActivity() {
             .setCancelable(false)
             // positive button text and action
             .setPositiveButton(R.string.save, DialogInterface.OnClickListener {
-                    dialog, id -> finish()
+                    dialog, id ->
+                run {
+                    Log.d(TAG,"Attempting to save file")
+                    val rect = RectF()
+                    imageFilterView.imageMatrix.mapRect(rect, RectF(imageFilterView.drawable.bounds))
+                    val bm = Bitmap.createBitmap(
+                        imageFilterView.drawToBitmap(),
+                        rect.left.toInt(),
+                        rect.top.toInt(),
+                        rect.width().toInt(),
+                        rect.height().toInt()
+                    )
+                    val outputFile = FileHelper.saveImage(bm, this@ImageAdjustmentActivity)
+                    val editImageIntent = Intent(this@ImageAdjustmentActivity, EditImageKActivity::class.java)
+                    editImageIntent.putExtra(CameraFragment.KEY_EXTRA_RESULT_URI, outputFile)
+                    this@ImageAdjustmentActivity.startActivity(editImageIntent)
+                }
             })
             // negative button text and action
             .setNegativeButton(android.R.string.cancel, DialogInterface.OnClickListener {
