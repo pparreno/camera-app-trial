@@ -1,10 +1,13 @@
 package com.pparreno.cameratrial.ui.photoeditor
 
+import android.content.DialogInterface
 import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.SeekBar
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.pparreno.cameratrial.R
 import com.pparreno.cameratrial.databinding.ActivityImageAdjustmentBinding
@@ -16,6 +19,11 @@ class ImageAdjustmentActivity : AppCompatActivity() {
 
     private var binding: ActivityImageAdjustmentBinding? = null
 
+    lateinit var seekBarSaturation : SeekBar
+    lateinit var seekBarContrast : SeekBar
+    lateinit var seekBarBrightness : SeekBar
+    lateinit var seekBarWarmth : SeekBar
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityImageAdjustmentBinding.inflate(layoutInflater)
@@ -23,7 +31,7 @@ class ImageAdjustmentActivity : AppCompatActivity() {
         setContentView(view)
 
         val labelSaturation = binding!!.labelSaturation
-        val seekBarSaturation = binding!!.seekbarSaturation
+        seekBarSaturation = binding!!.seekbarSaturation
         labelSaturation.text = String.format(
             "%s (%.2f)",
             getString(R.string.saturation),
@@ -52,7 +60,7 @@ class ImageAdjustmentActivity : AppCompatActivity() {
         })
 
         val labelContrast = binding!!.labelContrast
-        val seekBarContrast = binding!!.seekbarContrast
+        seekBarContrast = binding!!.seekbarContrast
         labelContrast.text = String.format(
             "%s (%.2f)",
             getString(R.string.contrast),
@@ -81,7 +89,7 @@ class ImageAdjustmentActivity : AppCompatActivity() {
         })
 
         val labelBrightness = binding!!.labelBrightness
-        val seekBarBrightness = binding!!.seekbarBrightness
+        seekBarBrightness = binding!!.seekbarBrightness
         labelBrightness.text = String.format(
             "%s (%.2f)",
             getString(R.string.brightness),
@@ -110,7 +118,7 @@ class ImageAdjustmentActivity : AppCompatActivity() {
         })
 
         val labelWarmth = binding!!.labelWarmth
-        val seekBarWarmth = binding!!.seekbarWarmth
+        seekBarWarmth = binding!!.seekbarWarmth
         labelWarmth.text = String.format(
             "%s (%.2f)",
             getString(R.string.warmth),
@@ -148,5 +156,47 @@ class ImageAdjustmentActivity : AppCompatActivity() {
         val inflater = menuInflater
         inflater.inflate(R.menu.image_adjustment_menu, menu)
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when(item.itemId)
+        {
+            R.id.menu_item_undo -> resetSliderValues()
+            R.id.menu_item_save -> saveImage()
+        }
+
+        return true;
+    }
+
+    private fun saveImage() {
+        val dialogBuilder = AlertDialog.Builder(this)
+
+        // set message of alert dialog
+        dialogBuilder.setMessage(R.string.save_image_dialog_message)
+            // if the dialog is cancelable
+            .setCancelable(false)
+            // positive button text and action
+            .setPositiveButton(R.string.save, DialogInterface.OnClickListener {
+                    dialog, id -> finish()
+            })
+            // negative button text and action
+            .setNegativeButton(android.R.string.cancel, DialogInterface.OnClickListener {
+                    dialog, id -> dialog.cancel()
+            })
+
+        // create dialog box
+        val alert = dialogBuilder.create()
+        // set title for alert dialog box
+        alert.setTitle(R.string.save_dialog_title)
+        // show alert dialog
+        alert.show()
+    }
+
+    private fun resetSliderValues() {
+        seekBarWarmth.progress = 40
+        seekBarContrast.progress = 50
+        seekBarBrightness.progress= 50
+        seekBarSaturation.progress = 50
     }
 }
