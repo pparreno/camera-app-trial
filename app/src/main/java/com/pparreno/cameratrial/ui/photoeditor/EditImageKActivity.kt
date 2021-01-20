@@ -40,10 +40,10 @@ import ja.burhanrashid52.photoeditor.PhotoEditor.OnSaveListener
 import java.io.File
 import java.io.IOException
 
-class EditImageKActivity() : BaseActivity(), OnPhotoEditorListener, View.OnClickListener,
+class EditImageKActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickListener,
     PropertiesBSFragment.Properties, EmojiListener, StickerListener, OnItemSelected,
     FilterListener {
-    lateinit var mPhotoEditor: PhotoEditor
+    private lateinit var mPhotoEditor: PhotoEditor
     private var mPhotoEditorView: PhotoEditorView? = null
     private var mPropertiesBSFragment: PropertiesBSFragment? = null
     private var mEmojiBSFragment: EmojiBSFragment? = null
@@ -58,7 +58,7 @@ class EditImageKActivity() : BaseActivity(), OnPhotoEditorListener, View.OnClick
     private val mConstraintSet = ConstraintSet()
     private var mIsFilterVisible = false
 
-    lateinit var imageUri : Uri
+    private lateinit var imageUri : Uri
 
     @VisibleForTesting
     var mSaveImageUri: Uri? = null
@@ -398,7 +398,7 @@ class EditImageKActivity() : BaseActivity(), OnPhotoEditorListener, View.OnClick
 
     companion object {
         private val TAG = EditImageActivity::class.java.simpleName
-        const val FILE_PROVIDER_AUTHORITY = "com.burhanrashid52.photoeditor.fileprovider"
+        const val FILE_PROVIDER_AUTHORITY = "com.pparreno.cameratrial.photoeditor.fileprovider"
         private const val CAMERA_REQUEST = 52
         private const val PICK_REQUEST = 53
     }
