@@ -30,6 +30,7 @@ class ProfileFragment : Fragment() {
 
         profileViewModel =
                 ViewModelProvider(this).get(ProfileViewModel::class.java)
+        profileViewModel.retrieveImages(requireActivity())
         profileBinding = FragmentProfileBinding.inflate(inflater, container, false)
 
         recyclerView = profileBinding.recyclerView
