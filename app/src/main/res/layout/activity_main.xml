@@ -32,14 +32,6 @@
             app:backgroundTint="@color/white"
             app:fabAlignmentMode="center" />
 
-        <com.google.android.material.bottomappbar.BottomAppBar
-            android:id="@+id/bottom_bar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:clickable="false"
-            app:fabAlignmentMode="center" />
-
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -63,6 +55,8 @@
             android:src="@drawable/ic_camera_button"
             app:borderWidth="0dp"
             app:layout_anchor="@id/bottom_app_bar"
+            android:clickable="true"
+            android:focusable="true"
             app:maxImageSize="56dp"
             app:tint="@null" />
 
