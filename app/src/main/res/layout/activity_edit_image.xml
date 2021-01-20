@@ -51,10 +51,10 @@
         android:layout_width="@dimen/top_tool_icon_width"
         android:layout_height="wrap_content"
         android:background="@color/semi_black_transparent"
-        android:padding="8dp"
-        android:visibility="invisible"
         android:clickable="false"
+        android:padding="8dp"
         android:src="@drawable/ic_gallery"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/rvConstraintTools"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -63,9 +63,10 @@
         android:layout_width="@dimen/top_tool_icon_width"
         android:layout_height="wrap_content"
         android:background="@color/semi_black_transparent"
+        android:clickable="false"
         android:padding="8dp"
         android:src="@drawable/ic_camera"
-        android:clickable="false"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/rvConstraintTools"
         app:layout_constraintStart_toEndOf="@id/imgGallery" />
 
@@ -136,10 +137,10 @@
         android:layout_width="@dimen/top_tool_icon_width"
         android:layout_height="wrap_content"
         android:background="@color/semi_black_transparent"
-        android:padding="8dp"
-        android:visibility="invisible"
         android:clickable="false"
+        android:padding="8dp"
         android:src="@drawable/ic_share"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/photoEditorView"
         app:layout_constraintEnd_toStartOf="@+id/imgUndo"
         app:layout_constraintStart_toEndOf="@+id/imgCamera" />

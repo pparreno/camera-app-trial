@@ -123,16 +123,16 @@ class EditImageKActivity() : BaseActivity(), OnPhotoEditorListener, View.OnClick
         imgUndo.setOnClickListener(this)
         val imgRedo: ImageView = findViewById(R.id.imgRedo)
         imgRedo.setOnClickListener(this)
-        val imgCamera: ImageView = findViewById(R.id.imgCamera)
+  /*      val imgCamera: ImageView = findViewById(R.id.imgCamera)
         imgCamera.setOnClickListener(this)
         val imgGallery: ImageView = findViewById(R.id.imgGallery)
-        imgGallery.setOnClickListener(this)
+        imgGallery.setOnClickListener(this)*/
         val imgSave: ImageView = findViewById(R.id.imgSave)
         imgSave.setOnClickListener(this)
         val imgClose: ImageView = findViewById(R.id.imgClose)
         imgClose.setOnClickListener(this)
-        val imgShare: ImageView = findViewById(R.id.imgShare)
-        imgShare.setOnClickListener(this)
+    /*    val imgShare: ImageView = findViewById(R.id.imgShare)
+        imgShare.setOnClickListener(this)*/
     }
 
     override fun onEditTextChangeListener(rootView: View, text: String, colorCode: Int) {

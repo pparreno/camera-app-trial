@@ -5,14 +5,14 @@
 
     <item
         android:id="@+id/menu_item_undo"
-        android:icon="@drawable/ic_undo_arrow_white"
+        android:icon="@drawable/ic_action_undo"
         android:title="@string/save"
         app:showAsAction="always"
         tools:ignore="AlwaysShowAction" />
 
     <item
         android:id="@+id/menu_item_save"
-        android:icon="@drawable/ic_check_white"
+        android:icon="@drawable/ic_action_check"
         android:title="@string/save"
         app:showAsAction="always"/>
 

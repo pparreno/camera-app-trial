@@ -4,6 +4,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.RectF
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -38,7 +39,7 @@ class ImageAdjustmentActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityImageAdjustmentBinding.inflate(layoutInflater)
-        val view: View = binding!!.getRoot()
+        val view: View = binding!!.root
         setContentView(view)
 
         val labelSaturation = binding!!.labelSaturation
@@ -162,6 +163,9 @@ class ImageAdjustmentActivity : AppCompatActivity() {
         imageUri = dataURI as Uri
 
         title = "";
+
+        supportActionBar!!.setBackgroundDrawable(ColorDrawable(getColor(R.color.white)))
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
