@@ -5,7 +5,6 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Log
 import android.widget.Toast
-import androidx.core.net.toUri
 import com.pparreno.cameratrial.R
 import java.io.File
 import java.io.IOException

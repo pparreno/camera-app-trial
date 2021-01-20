@@ -22,7 +22,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.pparreno.cameratrial.ui.photoeditor.EditImageKActivity
 import com.pparreno.cameratrial.R
 import com.pparreno.cameratrial.ui.photoeditor.ImageAdjustmentActivity
 import com.pparreno.cameratrial.utils.files.FileHelper

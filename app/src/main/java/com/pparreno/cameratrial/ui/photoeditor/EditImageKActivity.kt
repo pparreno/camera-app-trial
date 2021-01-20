@@ -35,7 +35,6 @@ import com.burhanrashid52.photoeditor.tools.ToolType
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.pparreno.cameratrial.R
 import com.pparreno.cameratrial.ui.camera.CameraFragment
-import com.pparreno.cameratrial.utils.files.FileHelper
 import ja.burhanrashid52.photoeditor.*
 import ja.burhanrashid52.photoeditor.PhotoEditor.OnSaveListener
 import java.io.File
