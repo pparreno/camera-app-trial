@@ -15,6 +15,7 @@ import com.pparreno.cameratrial.databinding.FragmentProfileBinding
 
 class ProfileFragment : Fragment() {
 
+    private lateinit var rvAdapter: ProfileRecyclerViewAdapter
     private lateinit var profileViewModel: ProfileViewModel
 
     private lateinit var profileBinding: FragmentProfileBinding
@@ -35,6 +36,8 @@ class ProfileFragment : Fragment() {
         profileViewModel.setLifecycleOwner(viewLifecycleOwner)
         profileViewModel.imageItems.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             Log.d(TAG, "length of items: " + it.size)
+            rvAdapter.data = it
+            rvAdapter.notifyDataSetChanged()
         })
         profileViewModel.retrieveImages(requireActivity())
 
@@ -58,7 +61,8 @@ class ProfileFragment : Fragment() {
         }
 
         // finally, data bind the recycler view with adapter
-        recyclerView.adapter = ProfileRecyclerViewAdapter()
+        rvAdapter = ProfileRecyclerViewAdapter(ArrayList())
+        recyclerView.adapter = rvAdapter
     }
 
     companion object {

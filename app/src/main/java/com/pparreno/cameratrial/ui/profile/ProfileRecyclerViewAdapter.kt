@@ -5,16 +5,25 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.pparreno.cameratrial.R
 import com.pparreno.cameratrial.databinding.ProfileRecyclerItemBinding
+import com.pparreno.cameratrial.ui.profile.model.PictureItem
 import com.pparreno.cameratrial.utils.files.UIHelper
 
 
-class ProfileRecyclerViewAdapter : RecyclerView.Adapter<ProfileRecyclerViewAdapter.ViewHolder>() {
+class ProfileRecyclerViewAdapter(var data: List<PictureItem>) : RecyclerView.Adapter<ProfileRecyclerViewAdapter.ViewHolder>() {
     lateinit var  viewBinding: ProfileRecyclerItemBinding
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
-        viewBinding = ProfileRecyclerItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        viewBinding = ProfileRecyclerItemBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
 
         return ViewHolder(viewBinding.root, viewBinding.itemImage)
     }
@@ -22,15 +31,30 @@ class ProfileRecyclerViewAdapter : RecyclerView.Adapter<ProfileRecyclerViewAdapt
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         if(position % 3 == 0)
         {
-            holder.itemImageView.layoutParams.height = UIHelper.getIntFromDips(450.0f, holder.itemView.context)
+            holder.itemImageView.layoutParams.height = UIHelper.getIntFromDips(
+                450.0f,
+                holder.itemView.context
+            )
         } else {
-            holder.itemImageView.layoutParams.height = UIHelper.getIntFromDips(200.0f, holder.itemView.context)
+            holder.itemImageView.layoutParams.height = UIHelper.getIntFromDips(
+                200.0f,
+                holder.itemView.context
+            )
         }
         holder.itemImageView.requestLayout()
+
+        var pictureItem = data[position]
+        val options: RequestOptions = RequestOptions()
+            .centerCrop()
+            .placeholder(R.drawable.got)
+            .error(R.drawable.got)
+
+        Glide.with(holder.itemView.context).load(pictureItem.uri).apply(options).into(holder.itemImageView)
+
     }
 
     override fun getItemCount(): Int {
-        return 15
+        return data.size
     }
 
 
