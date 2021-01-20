@@ -1,13 +1,14 @@
 package com.pparreno.cameratrial.ui.camera
 
-import androidx.lifecycle.LiveData
+
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class CameraViewModel : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is the Camera Fragment"
+    val takePhoto = MutableLiveData<Boolean>()
+
+    fun shouldTakePhoto(item: Boolean) {
+        takePhoto.value = item
     }
-    val text: LiveData<String> = _text
 }

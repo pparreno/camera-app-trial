@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
@@ -21,6 +22,8 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.pparreno.cameratrial.R
 import com.pparreno.cameratrial.ui.photoeditor.ImageAdjustmentActivity
@@ -34,13 +37,14 @@ import java.util.concurrent.Executors
 
 class CameraFragment : Fragment() {
 
-
-    private lateinit var cameraViewModel: CameraViewModel
-
     private var imageCapture: ImageCapture? = null
 
     private lateinit var outputDirectory: File
     private lateinit var cameraExecutor: ExecutorService
+
+    // Use the 'by activityViewModels()' Kotlin property delegate
+    // from the fragment-ktx artifact
+    private val cameraViewModel: CameraViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,15 +52,24 @@ class CameraFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
-
-        cameraViewModel =
-            ViewModelProvider(this).get(CameraViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_camera, container, false)
 /*        val textView: TextView = root.findViewById(R.id.text_camera)
         cameraViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })*/
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        cameraViewModel.shouldTakePhoto(false)
+        cameraViewModel.takePhoto.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            if(it == true)
+            {
+                takePhoto()
+                cameraViewModel.takePhoto.value = false
+            }
+        })
     }
 
     override fun onStart() {
@@ -69,9 +82,6 @@ class CameraFragment : Fragment() {
                 context as Activity, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS
             )
         }
-
-        // Set up the listener for take photo button
-        camera_capture_button.setOnClickListener { takePhoto() }
 
         //outputDirectory = getOutputDirectory()
         outputDirectory = FileHelper.getOutputDirectory(requireActivity())

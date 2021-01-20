@@ -1,7 +1,10 @@
 package com.pparreno.cameratrial
 
 import android.os.Bundle
+import android.os.Debug
+import android.util.Log
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -11,6 +14,7 @@ import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.pparreno.cameratrial.databinding.ActivityMainBinding
+import com.pparreno.cameratrial.ui.camera.CameraViewModel
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,6 +27,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val model: CameraViewModel by viewModels()
+
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view: View = binding.root
         setContentView(view)
@@ -44,16 +52,24 @@ class MainActivity : AppCompatActivity() {
 
         fab = binding.fab
         fab.setOnClickListener(View.OnClickListener {
-            if (isBottomAppBarHidden) {
-                isBottomAppBarHidden = false
-                bottomAppBar.performShow()
-                navView.visibility = View.VISIBLE
+            if (isBottomAppBarHidden && (navView.selectedItemId == R.id.navigation_camera)) {
+                Log.d(TAG, "will attempt to take photo")
+                Log.d(TAG, "model flag: " + model.takePhoto.value)
+                //insert behavior here when
+                if(model.takePhoto.value == false)
+                {
+                    model.shouldTakePhoto(true)
+                }
             } else {
                 isBottomAppBarHidden = true
                 bottomAppBar.performHide()
                 navView.visibility = View.GONE
+                navView.selectedItemId = R.id.navigation_camera
             }
 
         })
+    }
+    companion object {
+        private const val TAG = "MainActivity"
     }
 }
