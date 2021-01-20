@@ -1,6 +1,7 @@
 package com.pparreno.cameratrial.ui.profile
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,7 +31,13 @@ class ProfileFragment : Fragment() {
 
         profileViewModel =
                 ViewModelProvider(this).get(ProfileViewModel::class.java)
+        profileViewModel.initializeObservableData()
+        profileViewModel.setLifecycleOwner(viewLifecycleOwner)
+        profileViewModel.imageItems.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            Log.d(TAG, "length of items: " + it.size)
+        })
         profileViewModel.retrieveImages(requireActivity())
+
         profileBinding = FragmentProfileBinding.inflate(inflater, container, false)
 
         recyclerView = profileBinding.recyclerView
@@ -52,5 +59,9 @@ class ProfileFragment : Fragment() {
 
         // finally, data bind the recycler view with adapter
         recyclerView.adapter = ProfileRecyclerViewAdapter()
+    }
+
+    companion object {
+        private const val TAG = "ProfileFragment"
     }
 }

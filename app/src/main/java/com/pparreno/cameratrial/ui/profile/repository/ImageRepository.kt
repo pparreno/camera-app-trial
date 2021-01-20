@@ -8,7 +8,7 @@ import java.io.File
 
 class ImageRepository() {
 
-    private var imageItems: MutableLiveData<ArrayList<PictureItem>> = MutableLiveData<ArrayList<PictureItem>>()
+    var imageItems: MutableLiveData<ArrayList<PictureItem>> = MutableLiveData<ArrayList<PictureItem>>()
 
     init {
         imageItems.value = ArrayList()
