@@ -1,7 +1,6 @@
 package com.pparreno.cameratrial
 
 import android.os.Bundle
-import android.os.Debug
 import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
@@ -56,8 +55,7 @@ class MainActivity : AppCompatActivity() {
                 Log.d(TAG, "will attempt to take photo")
                 Log.d(TAG, "model flag: " + model.takePhoto.value)
                 //insert behavior here when
-                if(model.takePhoto.value == false)
-                {
+                if (model.takePhoto.value == false) {
                     model.shouldTakePhoto(true)
                 }
             } else {
@@ -69,6 +67,25 @@ class MainActivity : AppCompatActivity() {
 
         })
     }
+
+    override fun onBackPressed() {
+        val count = supportFragmentManager.backStackEntryCount
+
+        Log.d(TAG, "backStackEntryCount: " + count)
+        if (count == 0) {
+            super.onBackPressed()
+            if(navView.selectedItemId != R.id.navigation_camera)
+            {
+                isBottomAppBarHidden = false
+                bottomAppBar.performShow()
+                navView.visibility = View.VISIBLE
+                navView.selectedItemId = R.id.navigation_timeline
+            }
+        } else {
+            supportFragmentManager.popBackStack()
+        }
+    }
+
     companion object {
         private const val TAG = "MainActivity"
     }
