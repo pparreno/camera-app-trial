@@ -33,12 +33,14 @@ import com.burhanrashid52.photoeditor.tools.EditingToolsAdapter
 import com.burhanrashid52.photoeditor.tools.EditingToolsAdapter.OnItemSelected
 import com.burhanrashid52.photoeditor.tools.ToolType
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.pparreno.cameratrial.MainActivity
 import com.pparreno.cameratrial.R
 import com.pparreno.cameratrial.ui.camera.CameraFragment
 import ja.burhanrashid52.photoeditor.*
 import ja.burhanrashid52.photoeditor.PhotoEditor.OnSaveListener
 import java.io.File
 import java.io.IOException
+
 
 class EditImageKActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickListener,
     PropertiesBSFragment.Properties, EmojiListener, StickerListener, OnItemSelected,
@@ -58,7 +60,7 @@ class EditImageKActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLi
     private val mConstraintSet = ConstraintSet()
     private var mIsFilterVisible = false
 
-    private lateinit var imageUri : Uri
+    private lateinit var imageUri: Uri
 
     @VisibleForTesting
     var mSaveImageUri: Uri? = null
@@ -123,16 +125,16 @@ class EditImageKActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLi
         imgUndo.setOnClickListener(this)
         val imgRedo: ImageView = findViewById(R.id.imgRedo)
         imgRedo.setOnClickListener(this)
-  /*      val imgCamera: ImageView = findViewById(R.id.imgCamera)
-        imgCamera.setOnClickListener(this)
-        val imgGallery: ImageView = findViewById(R.id.imgGallery)
-        imgGallery.setOnClickListener(this)*/
+        /*      val imgCamera: ImageView = findViewById(R.id.imgCamera)
+              imgCamera.setOnClickListener(this)
+              val imgGallery: ImageView = findViewById(R.id.imgGallery)
+              imgGallery.setOnClickListener(this)*/
         val imgSave: ImageView = findViewById(R.id.imgSave)
         imgSave.setOnClickListener(this)
         val imgClose: ImageView = findViewById(R.id.imgClose)
         imgClose.setOnClickListener(this)
-    /*    val imgShare: ImageView = findViewById(R.id.imgShare)
-        imgShare.setOnClickListener(this)*/
+        /*    val imgShare: ImageView = findViewById(R.id.imgShare)
+            imgShare.setOnClickListener(this)*/
     }
 
     override fun onEditTextChangeListener(rootView: View, text: String, colorCode: Int) {
@@ -224,22 +226,29 @@ class EditImageKActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLi
                     .setClearViewsEnabled(true)
                     .setTransparencyEnabled(true)
                     .build()
-                mPhotoEditor.saveAsFile(outputDir.absolutePath, saveSettings, object : OnSaveListener {
-                    override fun onSuccess(imagePath: String) {
-                        hideLoading()
-                        showSnackbar("Image Saved Successfully")
-                        mSaveImageUri = Uri.fromFile(File(imagePath))
-                        mPhotoEditorView!!.source.setImageURI(mSaveImageUri)
-                        finish()
-                    }
+                mPhotoEditor.saveAsFile(
+                    outputDir.absolutePath,
+                    saveSettings,
+                    object : OnSaveListener {
+                        override fun onSuccess(imagePath: String) {
+                            hideLoading()
+                            showSnackbar("Image Saved Successfully")
+                            mSaveImageUri = Uri.fromFile(File(imagePath))
+                            mPhotoEditorView!!.source.setImageURI(mSaveImageUri)
+                            val intent = Intent(this@EditImageKActivity, MainActivity::class.java)
+                            intent.putExtra(MainActivity.KEY_EXTRA_NAV_CAMERA_COMPLETED, true)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                            startActivity(intent)
+                        }
 
-                    override fun onFailure(exception: Exception) {
-                        hideLoading()
-                        showSnackbar("Failed to save Image")
-                        exception.message?.let { Log.e(TAG, it) }
-                        finish()
-                    }
-                })
+                        override fun onFailure(exception: Exception) {
+                            hideLoading()
+                            showSnackbar("Failed to save Image")
+                            exception.message?.let { Log.e(TAG, it) }
+                            finish()
+                        }
+                    })
             } catch (e: IOException) {
                 e.printStackTrace()
                 hideLoading()

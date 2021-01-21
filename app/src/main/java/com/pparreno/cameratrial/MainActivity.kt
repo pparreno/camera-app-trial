@@ -1,5 +1,6 @@
 package com.pparreno.cameratrial
 
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -13,6 +14,7 @@ import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.pparreno.cameratrial.databinding.ActivityMainBinding
+import com.pparreno.cameratrial.ui.camera.CameraFragment
 import com.pparreno.cameratrial.ui.camera.CameraViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -66,6 +68,8 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
+
+
     }
 
     override fun onBackPressed() {
@@ -74,8 +78,7 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, "backStackEntryCount: " + count)
         if (count == 0) {
             super.onBackPressed()
-            if(navView.selectedItemId != R.id.navigation_camera)
-            {
+            if (navView.selectedItemId != R.id.navigation_camera) {
                 isBottomAppBarHidden = false
                 bottomAppBar.performShow()
                 navView.visibility = View.VISIBLE
@@ -88,5 +91,6 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private const val TAG = "MainActivity"
+        const val KEY_EXTRA_NAV_CAMERA_COMPLETED = "MainActivity.KEY_EXTRA_NAV_CAMERA_COMPLETED"
     }
 }

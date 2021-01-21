@@ -11,6 +11,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.pparreno.cameratrial.databinding.FragmentProfileBinding
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class ProfileFragment : Fragment() {
@@ -36,6 +38,7 @@ class ProfileFragment : Fragment() {
         profileViewModel.setLifecycleOwner(viewLifecycleOwner)
         profileViewModel.imageItems.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             Log.d(TAG, "length of items: " + it.size)
+            it.reverse()
             rvAdapter.data = it
             rvAdapter.notifyDataSetChanged()
         })
