@@ -35,5 +35,6 @@
     <string name="save">Save</string>
     <string name="save_image_dialog_message">Do you want to save these changes?</string>
     <string name="save_dialog_title">Save Changes</string>
-    <string name="camera_button">Camera Button</string>>
+    <string name="camera_button">Camera Button</string>
+    <string name="title_activity_full_image">FullImageActivity</string>>
 </resources>
